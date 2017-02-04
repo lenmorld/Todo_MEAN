@@ -94,4 +94,15 @@ angular.module('todoApp', [])
 
 			self.newItem = '';
 		};
+
+		self.todoChange = function(item) {
+			console.log(item.done);
+
+			// call code to modify this item in DB
+
+			// create Node route first
+
+
+		};
+
 	}]);
