@@ -43,13 +43,13 @@ angular.module('todoApp', [])
 
 		};
 
-		// self.remaining = function() {
-		// 	var todoCount = 0;
-		// 	angular.forEach(self.items, function(todoObject) {
-		// 		if (todoObject.done) todoCount++;
-		// 	});
-		// 	return todoCount;
-		// };
+		self.remaining = function() {
+			var doneCount = 0;
+			angular.forEach(self.items, function(todoObject) {
+				if (todoObject.done) doneCount++;
+			});
+			return doneCount;
+		};
 
 
 		// HARD-CODED
