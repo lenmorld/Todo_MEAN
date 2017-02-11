@@ -5,10 +5,6 @@
 - [x] post an item 
 - [ ] modify an item
 
-
-
-
-
 ANGULAR
 $http.put format, data must be JSON object like {login: "login", password: "password"}
 if its a variable, must convert to JSON like this using angular.toJson
