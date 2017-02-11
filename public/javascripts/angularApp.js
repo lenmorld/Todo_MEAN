@@ -4,7 +4,7 @@ angular.module('todoApp', [])
 
 		self.appTitle = "TODO APP";
 
-		// HARD-CODED DATA
+		// HARD-CODED DATA for earlier dev stages
 		// self.max = 3;
 		// self.items = [
 		// 	{"id": 1, "title": "learn AngularJS", "priority": 1, "done": true},
@@ -96,13 +96,25 @@ angular.module('todoApp', [])
 		};
 
 		self.todoChange = function(item) {
-			console.log(item.done);
-
+			console.log(item);
 			// call code to modify this item in DB
 
+			// data passed must be an JSON Object
+			// $http.put('/todos/' + item.id, { done: item.done })
+			$http.put('/todos/' + item.id, angular.toJson(item))
+			   .then(
+			       function(response){
+			         // success callback
+					if (response.data)
+						self.msg = "Put Data Method Executed Successfully!";
+			       }, 
+			       function(response){
+			         // failure callback
+			         	self.msg = "error";
+			       }
+			    );
+
 			// create Node route first
-
-
 		};
 
 	}]);
