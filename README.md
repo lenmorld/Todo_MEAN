@@ -3,6 +3,7 @@
 - [x] MEAN stack working
 - [x] get all items
 - [x] post an item 
+- [x] modify state of an item
 - [ ] modify an item
 
 ANGULAR
@@ -20,7 +21,6 @@ http://mongoosejs.com/docs/api.html#model_Model.find
 
 
 NODE.JS
-
 router redirect after PUT using 303 (vs POST using default 302)
 http://stackoverflow.com/questions/33214717/why-post-redirects-to-get-and-put-redirects-to-put
 

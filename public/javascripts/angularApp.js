@@ -1,7 +1,6 @@
 angular.module('todoApp', [])
 	.controller('MainCtrl',  ['$http', function($http) {
 		var self= this;
-
 		self.appTitle = "TODO APP";
 
 		// HARD-CODED DATA for earlier dev stages
@@ -13,7 +12,6 @@ angular.module('todoApp', [])
 		// ];
 
 		self.items = [];
-
 		$http.get('/todos')
 			.then(
 				function(response) {
@@ -28,7 +26,6 @@ angular.module('todoApp', [])
 
 		//
 		self.fetchAll = function() {
-
 			$http.get('/todos')
 				.then(
 					function(response) {
@@ -40,7 +37,6 @@ angular.module('todoApp', [])
 						console.error('Error while fetching notes');
 					} 
 				);
-
 		};
 
 		self.remaining = function() {
@@ -51,9 +47,7 @@ angular.module('todoApp', [])
 			return doneCount;
 		};
 
-
 		// HARD-CODED
-
 		// self.addNew = function() {
 		// 	self.items.push({
 		// 		"id": self.max+1,
@@ -66,10 +60,6 @@ angular.module('todoApp', [])
 		// 	self.newItem = '';
 		// };
 
-
-
-		// call fetchAll here
-
 		self.addNew = function() {
 
 			var newItemObj = {
@@ -81,7 +71,6 @@ angular.module('todoApp', [])
 
 			console.log(newItemObj);
 			
-
 			$http.post('/todos', newItemObj)	// push to server
 				.then(function(data, status) {
 					console.log(data);
@@ -113,8 +102,5 @@ angular.module('todoApp', [])
 			         	self.msg = "error";
 			       }
 			    );
-
-			// create Node route first
 		};
-
 	}]);
