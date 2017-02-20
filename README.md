@@ -5,6 +5,7 @@
 - [x] post an item 
 - [x] modify state of an item
 - [ ] modify an item
+- [ ] users and auth
 
 ANGULAR
 $http.put format, data must be JSON object like {login: "login", password: "password"}
@@ -23,6 +24,12 @@ http://mongoosejs.com/docs/api.html#model_Model.find
 NODE.JS
 router redirect after PUT using 303 (vs POST using default 302)
 http://stackoverflow.com/questions/33214717/why-post-redirects-to-get-and-put-redirects-to-put
+
+
+crypto - pbkdf2() for hashing
+JWT - for generating tokens
+Passport - provides auth using password, Github, FB, etc
+
 
 EXPRESS guide on redirection
 https://expressjs.com/en/4x/api.html#res.redirect
