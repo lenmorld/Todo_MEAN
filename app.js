@@ -17,8 +17,7 @@ mongoose.connect('mongodb://localhost/todo');
 
 // require('./models/Todo');
 require('./models/Users');
-
-require('./config/passport');
+require('./config/passport');           // passport config
 
 // create /models/Todo schema, or do it directly here 
 var TodoSchema = new mongoose.Schema({

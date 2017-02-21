@@ -36,8 +36,8 @@ UserSchema.methods.generateJWT = function() {
 
 	return jwt.sign({
 		// payload object that gets signed, accessed by client and server
-		_id: this._id;
-		username: this.username;
+		_id: this._id,
+		username: this.username,
 		exp: parseInt(exp.getTime() / 1000),	// UNIX timestamp in seconds - token expiration
 	}, 'SECRET');		// 2nd arg SECRET to sign tokens, better to use env. var than hardcoding
 };
