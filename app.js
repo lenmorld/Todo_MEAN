@@ -26,7 +26,11 @@ mongoose.model('Todo', TodoSchema);
 // 'mongodb://{NEW USERNAME}:{NEW PASSWORD}@{EC2 URL}:{PORT}/{DBname}'
 
 // REMOTE @ AWS EC2
-mongoose.connect('mongodb://lenny_todo:2049@ec2-52-70-255-80.compute-1.amazonaws.com:27017/todo'); 
+// mongoose.connect('mongodb://lenny_todo:2049@ec2-52-70-255-80.compute-1.amazonaws.com:27017/todo'); 
+
+// Elastic IP
+mongoose.connect('mongodb://lenny_todo:2049@52.44.44.181:27017/todo'); 
+
 
 
 var index = require('./routes/index');
