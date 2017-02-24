@@ -1,0 +1,29 @@
+<!-- <div ng-controller="MainCtrl as mainCtrl"> -->
+	<div class="well">
+		sample
+		<div class="form-group">
+			<h4>{{ mainCtrl.remaining()  }} / {{mainCtrl.items.length}} COMPLETED </h4>
+
+			<div ng-repeat="item in mainCtrl.items">
+				<div class="checkbox">
+					<label><input type="checkbox" 
+								  ng-model="item.done"
+								  ng-change="mainCtrl.todoChange(item)"/>
+					
+						<span ng-class="{ 'text-success' : item.done, 'text-danger' : !item.done }">{{item.title}}</span>
+					</label>
+				</div>
+				<!-- <input type="checkbox" ng-checked="item.done" ng-model="item.done" />  -->
+			</div>
+
+			<div class="row">
+				<div class="col-md-8">
+					<input type="text" class="form-control" ng-model="mainCtrl.newItem" placeholder="add new todo here" />
+				</div>
+				<div class="col-md-4">
+				<button type="button" class="btn btn-primary" ng-click="mainCtrl.addNew()">ADD TODO</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- </div> -->

@@ -5,42 +5,48 @@
 	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
 	<style type="text/css">
 	</style>
+
+
 </head>
 
 <body ng-app="todoApp">
 	<div ng-controller="MainCtrl as mainCtrl">
-		<div class="container">
-			<div class="page-header alert alert-info"><h2>{{mainCtrl.appTitle}}</h2></div>
-			<div class="well">
-					<div class="form-group">
-						<h4>{{ mainCtrl.remaining()  }} / {{mainCtrl.items.length}} COMPLETED </h4>
+		<div>
+			<div class="container">
 
-						<div ng-repeat="item in mainCtrl.items">
-							<div class="checkbox">
-								<label><input type="checkbox" 
-											  ng-model="item.done"
-											  ng-change="mainCtrl.todoChange(item)"/>
-								
-									<span ng-class="{ 'text-success' : item.done, 'text-danger' : !item.done }">{{item.title}}</span>
-								</label>
-							</div>
-							<!-- <input type="checkbox" ng-checked="item.done" ng-model="item.done" />  -->
-						</div>
+				<!-- HEADER and NAVBAR -->
+				<div class="page-header alert alert-info"><h2>{{mainCtrl.appTitle}}</h2></div>
+				header
 
-						<div class="row">
-							<div class="col-md-8">
-								<input type="text" class="form-control" ng-model="mainCtrl.newItem" placeholder="add new todo here" />
-							</div>
-							<div class="col-md-4">
-							<button type="button" class="btn btn-primary" ng-click="mainCtrl.addNew()">ADD TODO</button>
-							</div>
-						</div>
-					</div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
+                    <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+                </ul>
+
+
+				<!-- MAIN CONTENT and INJECTED VIEWS -->
+
+				<div id="main">
+					{{mainCtrl.appTitle}} - {{mainCtrl.message}}
+			        <!-- angular templating -->
+			        <!-- this is where content will be injected -->
+
+			        
+			        {{contactController.message}}
+			        {{aboutController.message}}
+
+
+					<div ng-view></div>
+
+				</div>
 			</div>
 		</div>
+
 	</div>
 	
 	<script src="/javascripts/angular.js"></script>
+	<script src="/javascripts/angular-route.js"></script>
 	<script src="/javascripts/angularApp.js"></script>
 </body>
 </html>

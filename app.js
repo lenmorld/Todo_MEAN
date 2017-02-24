@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+// var database = require('./config/database');      // load the database config
 
 // mongoose
 var mongoose = require('mongoose');
@@ -11,6 +12,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 mongoose.connect('mongodb://localhost/todo');
+// mongoose.connect(database.url); 
 
 // crypto
 // var crypto = require('crypto');
@@ -22,6 +24,7 @@ require('./config/passport');           // passport config
 // create /models/Todo schema, or do it directly here 
 var TodoSchema = new mongoose.Schema({
 	id: Number,
+  author: String,
 	title: String,
 	priority: Number,
 	done: Boolean
