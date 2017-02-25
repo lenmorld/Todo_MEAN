@@ -7,8 +7,20 @@ var bodyParser = require('body-parser');
 
 // mongoose
 var mongoose = require('mongoose');
-// require('./models/Todo');
+// passport
+var passport = require('passport');
 
+mongoose.connect('mongodb://localhost/todo');
+
+// crypto
+// var crypto = require('crypto');
+
+// require('./models/Todo');
+require('./models/Users');
+
+require('./config/passport');
+
+// create /models/Todo schema, or do it directly here 
 var TodoSchema = new mongoose.Schema({
 	id: Number,
 	title: String,
@@ -16,22 +28,18 @@ var TodoSchema = new mongoose.Schema({
 	done: Boolean
 });
 
+// user Model for auth
+// var UserSchema = new mongoose.Schema({
+//   username: {type: String, lowercase: true, unique: true},
+//   hash: String,
+//   salt: String
+// });
+
 mongoose.model('Todo', TodoSchema);
+// mongoose.model('User', UserSchema);
 // other models if we have
 
-// create /models/Todo schema, or do it directly here 
-
-// LOCAL
-// mongoose.connect('mongodb://localhost/todo');            
-// 'mongodb://{NEW USERNAME}:{NEW PASSWORD}@{EC2 URL}:{PORT}/{DBname}'
-
-// REMOTE @ AWS EC2
-// mongoose.connect('mongodb://lenny_todo:2049@ec2-52-70-255-80.compute-1.amazonaws.com:27017/todo'); 
-
-// Elastic IP
-mongoose.connect('mongodb://lenny_todo:2049@52.44.44.181:27017/todo'); 
-
-
+// mongoose.connect('mongodb://localhost/todo');
 
 var index = require('./routes/index');
 var users = require('./routes/users');

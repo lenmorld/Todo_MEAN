@@ -1,15 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
+
 // mongoose and DB models
 var mongoose = require('mongoose');
 var Todo = mongoose.model('Todo');
 
 
 /* GET home page. */
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { page: 'index' });
 });
+
 
 
 // all other routes here
