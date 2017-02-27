@@ -29,3 +29,12 @@ https://expressjs.com/en/4x/api.html#res.redirect
 
 EXPRESS guides on routes
 https://expressjs.com/en/guide/routing.html
+
+
+ngRoute + Express4
+struggled for 4 days to make it work, bec of the 404 error
+it seemed that Angular ngRoute's $routeProvider can't find the views folder which is clearly there
+and/or ngRoute and Express was stepping on each other's foot in taking the URL
+fix was to let Express serve 'views' folder and $routeProvider finally ended up seeing it 
+still not 100% confident about the fix though but at least basic security concerns
+are hanled by the otherwise route in Angular
