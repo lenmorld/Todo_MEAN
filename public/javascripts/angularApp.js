@@ -1,4 +1,28 @@
-angular.module('todoApp', [])
+angular.module('todoApp', ['ngRoute'])
+	.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+
+		
+		
+
+		$locationProvider.hashPrefix('');
+
+		$routeProvider.when('/', {
+		// templateUrl: '/views/home.ejs'
+		templateUrl: 'home.ejs'
+		})
+		.when('/todos', {
+		// templateUrl: '/views/todos.ejs'
+		templateUrl: 'todos.ejs',
+		controller: 'MainCtrl',
+		controllerAs: 'mainCtrl'
+		})
+		.when('/second', {
+		// templateUrl: '/views/second.ejs'
+		templateUrl: 'second.ejs'
+		})
+		.otherwise({redirectTo: '/'});
+	}])
+
 	.controller('MainCtrl',  ['$http', function($http) {
 		var self= this;
 		self.appTitle = "TODO APP";
