@@ -22,14 +22,14 @@ mongoose.model('Todo', TodoSchema);
 // create /models/Todo schema, or do it directly here 
 
 // LOCAL
-// mongoose.connect('mongodb://localhost/todo');            
+mongoose.connect('mongodb://localhost/todo');            
 // 'mongodb://{NEW USERNAME}:{NEW PASSWORD}@{EC2 URL}:{PORT}/{DBname}'
 
 // REMOTE @ AWS EC2
 // mongoose.connect('mongodb://lenny_todo:2049@ec2-52-70-255-80.compute-1.amazonaws.com:27017/todo'); 
 
 // Elastic IP
-mongoose.connect('mongodb://lenny_todo:2049@52.44.44.181:27017/todo'); 
+// mongoose.connect('mongodb://lenny_todo:2049@52.44.44.181:27017/todo'); 
 
 
 
@@ -49,6 +49,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));      // ADDED THIS TO make ngRoute work
 
 app.use('/', index);
 app.use('/users', users);
