@@ -8,7 +8,8 @@ var Todo = mongoose.model('Todo');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	console.log("NODE get /");
+  res.render('index', { title: 'NodeJS Express message' });
 });
 
 
