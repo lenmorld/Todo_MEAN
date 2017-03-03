@@ -1,30 +1,161 @@
 angular.module('todoApp', ['ngRoute'])
 	.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
-
-
-
 		$locationProvider.hashPrefix('');
 
 		$routeProvider.when('/', {
-		// templateUrl: '/views/home.ejs'
-		templateUrl: 'home.ejs',
-		controller: 'IndexCtrl'
+			// templateUrl: '/views/home.ejs'
+			templateUrl: 'home.ejs',
+			controller: 'IndexCtrl'
 		})
 		.when('/todos', {
-		// templateUrl: '/views/todos.ejs'
-		templateUrl: 'todos.ejs',
-		controller: 'MainCtrl',
-		controllerAs: 'mainCtrl'
+			// templateUrl: '/views/todos.ejs'
+			templateUrl: 'todos.ejs',
+			controller: 'MainCtrl',
+			controllerAs: 'mainCtrl'
 		})
 		.when('/second', {
-		// templateUrl: '/views/second.ejs'
-		templateUrl: 'second.ejs',
-		controller: 'SecondCtrl'
+			// templateUrl: '/views/second.ejs'
+			templateUrl: 'second.ejs',
+			controller: 'SecondCtrl'
 
+		})
+		.when('/login', {
+			templateUrl: 'login.ejs',
+			controller: 'AuthCtrl',
+
+			/* ui-router
+			  onEnter: ['$state', 'auth', function($state, auth){
+			    if(auth.isLoggedIn()){
+			      $state.go('home');
+			    }
+			  }]
+			*/
+
+			resolve: {
+					// might have to add $location or $window to deps in cannot reference from auth
+				  onEnter: ['$state', 'auth', function($state, auth){
+				    if(auth.isLoggedIn()){
+				      // $state.go('home');
+				      $location.path( "/" );
+				    }
+				  }]	
+			}
+		})
+
+
+		.when('/register', {
+			templateUrl: 'register.ejs',
+			controller: 'AuthCtrl',
+
+			// onEnter function
+			/* ui-router
+			  onEnter: ['$state', 'auth', function($state, auth){
+			    if(auth.isLoggedIn()){
+			      $state.go('home');
+			    }
+			  }]
+			*/
+
+			resolve: {
+				  onEnter: ['$state', 'auth', function($state, auth){
+				    if(auth.isLoggedIn()){
+				      // $state.go('home');
+				      $location.path( "/" );
+				    }
+				  }]	
+			}
 		})
 		.otherwise({redirectTo: '/'});
 	}])
+
+	.factory('auth', ['$http', '$window', function($http, $window) {
+		// $window needed for localStorage
+
+		var auth = {};
+
+		auth.saveToken = function (token){
+		  $window.localStorage['todo-token'] = token;
+		};
+
+		auth.getToken = function (){
+		  return $window.localStorage['todo-token'];
+		};
+
+		auth.isLoggedIn = function(){
+		  var token = auth.getToken();
+
+		  // if token exists check payload if expired, otherwise assume user logged out
+		  if(token){
+		    var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+		    return payload.exp > Date.now() / 1000;
+		  } else {
+		    return false;
+		  }
+		};
+
+		// use /register and /login routes created before
+
+		auth.register = function(user){
+		  return $http.post('/register', user).success(function(data){
+		    auth.saveToken(data.token);
+		  });
+		};
+
+		auth.logIn = function(user){
+		  return $http.post('/login', user).success(function(data){
+		    auth.saveToken(data.token);
+		  });
+		};
+
+		return auth;
+	}])
+
+	// auth Controller
+	.controller('AuthCtrl', [
+	'$scope',
+	'$state',
+	'auth',
+	function($scope, $state, auth){
+	  $scope.user = {};			// init user
+
+	  // scope functions that calls auth factory
+	  $scope.register = function(){
+	    auth.register($scope.user).error(function(error){
+	      $scope.error = error;
+	    }).then(function(){
+	      // $state.go('home');
+
+	      // equiv in ngRouter
+	      $location.path( "/" );
+	    });
+	  };
+
+	  $scope.logIn = function(){
+	    auth.logIn($scope.user).error(function(error){
+	      $scope.error = error;
+	    }).then(function(){
+	      // $state.go('home');
+	      $location.path( "/" );
+
+	    });
+	  };
+	}])
+
+	.controller('NavCtrl', [
+		'$scope',
+		'auth',
+		function($scope, auth){
+		  $scope.isLoggedIn = auth.isLoggedIn;
+		  $scope.currentUser = auth.currentUser;
+		  $scope.logOut = auth.logOut;
+		}]
+	);
+
+
+
+
 
 	.controller('IndexCtrl', function() {
 		console.log("ngRoute: Index");
@@ -34,10 +165,13 @@ angular.module('todoApp', ['ngRoute'])
 		console.log("ngRoute: Second");
 	})	
 
-	.controller('MainCtrl',  ['$http', function($http) {
+	.controller('MainCtrl',  ['$http', 'auth', function($http) {
 		console.log("ngRoute: TODO");
 		var self= this;
 		self.appTitle = "TODO APP";
+
+
+		$scope.isLoggedIn = auth.isLoggedIn;			// expose isLoggedIn to scope
 
 		// HARD-CODED DATA for earlier dev stages
 		// self.max = 3;
@@ -107,7 +241,9 @@ angular.module('todoApp', ['ngRoute'])
 
 			console.log(newItemObj);
 			
-			$http.post('/todos', newItemObj)	// push to server
+			$http.post('/todos', newItemObj, 
+					{ headers: {Authorization: 'Bearer '+ auth.getToken()} }			// auth
+				)	// push to server
 				.then(function(data, status) {
 					console.log(data);
 
@@ -126,7 +262,9 @@ angular.module('todoApp', ['ngRoute'])
 
 			// data passed must be an JSON Object
 			// $http.put('/todos/' + item.id, { done: item.done })
-			$http.put('/todos/' + item.id, angular.toJson(item))
+			$http.put('/todos/' + item.id, angular.toJson(item), 
+				{ headers: {Authorization: 'Bearer '+ auth.getToken()} }				// auth
+				)
 			   .then(
 			       function(response){
 			         // success callback

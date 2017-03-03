@@ -11,15 +11,30 @@
 									<span ng-class="{ 'text-success' : item.done, 'text-danger' : !item.done }">{{item.title}}</span>
 								</label>
 							</div>
+
+							<!-- author -->
+							<span ng-show="post.author">
+					  			posted by <a>{{post.author}}</a> |
+							</span>  
 						</div>
 
-						<div class="row">
+						<div class="row"
+							 ng-show="isLoggedIn()"
+							 >
 							<div class="col-md-8">
 								<input type="text" class="form-control" ng-model="mainCtrl.newItem" placeholder="add new todo here" />
 							</div>
 							<div class="col-md-4">
-							<button type="button" class="btn btn-primary" ng-click="mainCtrl.addNew()">ADD TODO</button>
+							<button type="button" 
+									class="btn btn-primary" 
+									ng-click="mainCtrl.addNew()"
+									">ADD TODO</button>
 							</div>
 						</div>
+						<div class="row"
+							ng-hide="isLoggedIn()">
+						  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+						</div>
+
 					</div>
 			</div>

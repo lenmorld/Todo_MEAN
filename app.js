@@ -15,17 +15,17 @@ mongoose.connect('mongodb://localhost/todo');
 // crypto
 // var crypto = require('crypto');
 
-// require('./models/Todo');
+require('./models/Todo');
 require('./models/Users');
 require('./config/passport');           // passport config
 
 // create /models/Todo schema, or do it directly here 
-var TodoSchema = new mongoose.Schema({
-	id: Number,
-	title: String,
-	priority: Number,
-	done: Boolean
-});
+// var TodoSchema = new mongoose.Schema({
+// 	id: Number,
+// 	title: String,
+// 	priority: Number,
+// 	done: Boolean
+// });
 
 // user Model for auth
 // var UserSchema = new mongoose.Schema({
@@ -34,7 +34,8 @@ var TodoSchema = new mongoose.Schema({
 //   salt: String
 // });
 
-mongoose.model('Todo', TodoSchema);
+// MOVED TO MODELS/*.*
+// mongoose.model('Todo', TodoSchema);
 // mongoose.model('User', UserSchema);
 // other models if we have
 
