@@ -34,7 +34,7 @@ angular.module('todoApp', ['ngRoute'])
 
 			resolve: {
 					// might have to add $location or $window to deps in cannot reference from auth
-				  onEnter: ['$state', 'auth', function($state, auth){
+				  onEnter: ['auth', '$location', function(auth, $location){
 				    if(auth.isLoggedIn()){
 				      // $state.go('home');
 				      $location.path( "/" );
@@ -58,7 +58,7 @@ angular.module('todoApp', ['ngRoute'])
 			*/
 
 			resolve: {
-				  onEnter: ['$state', 'auth', function($state, auth){
+				  onEnter: ['auth', '$location', function(auth, $location){
 				    if(auth.isLoggedIn()){
 				      // $state.go('home');
 				      $location.path( "/" );
@@ -75,10 +75,12 @@ angular.module('todoApp', ['ngRoute'])
 		var auth = {};
 
 		auth.saveToken = function (token){
+		  console.log("save token", token);
 		  $window.localStorage['todo-token'] = token;
 		};
 
 		auth.getToken = function (){
+		  console.log("get token", $window.localStorage['todo-token']);
 		  return $window.localStorage['todo-token'];
 		};
 
@@ -104,6 +106,8 @@ angular.module('todoApp', ['ngRoute'])
 		};
 
 		auth.logIn = function(user){
+
+		  console.log("auth logIN: ", user);	
 		  return $http.post('/login', user).success(function(data){
 		    auth.saveToken(data.token);
 		  });
@@ -115,9 +119,9 @@ angular.module('todoApp', ['ngRoute'])
 	// auth Controller
 	.controller('AuthCtrl', [
 	'$scope',
-	'$state',
+	'$location',
 	'auth',
-	function($scope, $state, auth){
+	function($scope, $location, auth){
 	  $scope.user = {};			// init user
 
 	  // scope functions that calls auth factory
@@ -151,11 +155,7 @@ angular.module('todoApp', ['ngRoute'])
 		  $scope.currentUser = auth.currentUser;
 		  $scope.logOut = auth.logOut;
 		}]
-	);
-
-
-
-
+	)
 
 	.controller('IndexCtrl', function() {
 		console.log("ngRoute: Index");
@@ -165,13 +165,12 @@ angular.module('todoApp', ['ngRoute'])
 		console.log("ngRoute: Second");
 	})	
 
-	.controller('MainCtrl',  ['$http', 'auth', function($http) {
+	.controller('MainCtrl',  ['$http', 'auth', function($http, auth) {
 		console.log("ngRoute: TODO");
 		var self= this;
 		self.appTitle = "TODO APP";
 
-
-		$scope.isLoggedIn = auth.isLoggedIn;			// expose isLoggedIn to scope
+		self.isLoggedIn = auth.isLoggedIn;			// expose isLoggedIn to scope
 
 		// HARD-CODED DATA for earlier dev stages
 		// self.max = 3;

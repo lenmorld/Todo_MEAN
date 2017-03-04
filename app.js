@@ -42,7 +42,7 @@ require('./config/passport');           // passport config
 // create /models/Todo schema, or do it directly here 
 
 // LOCAL
-mongoose.connect('mongodb://localhost/todo');            
+// mongoose.connect('mongodb://localhost/todo');            
 // 'mongodb://{NEW USERNAME}:{NEW PASSWORD}@{EC2 URL}:{PORT}/{DBname}'
 
 // REMOTE @ AWS EC2
