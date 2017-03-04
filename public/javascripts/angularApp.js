@@ -80,7 +80,15 @@ angular.module('todoApp', ['ngRoute'])
 		};
 
 		auth.getToken = function (){
-		  console.log("get token", $window.localStorage['todo-token']);
+
+		  var token = $window.localStorage['todo-token'];
+		  console.log("get token", token);
+
+		  if (!token)
+		  {
+		  	// alert("Login to change status");
+		  } 
+
 		  return $window.localStorage['todo-token'];
 		};
 
@@ -263,21 +271,31 @@ angular.module('todoApp', ['ngRoute'])
 			console.log(item);
 			// call code to modify this item in DB
 
-			// data passed must be an JSON Object
-			// $http.put('/todos/' + item.id, { done: item.done })
-			$http.put('/todos/' + item.id, angular.toJson(item), 
-				{ headers: {Authorization: 'Bearer '+ auth.getToken()} }				// auth
-				)
-			   .then(
-			       function(response){
-			         // success callback
-					if (response.data)
-						self.msg = "Put Data Method Executed Successfully!";
-			       }, 
-			       function(response){
-			         // failure callback
-			         	self.msg = "error";
-			       }
-			    );
+			var token = auth.getToken();
+
+			if(!token) {
+				console.log("need login to change");
+				$('.change_error').show().delay(1000).fadeOut("slow");
+			}
+			else {
+				// data passed must be an JSON Object
+				// $http.put('/todos/' + item.id, { done: item.done })
+				$http.put('/todos/' + item.id, angular.toJson(item), 
+					{ headers: {Authorization: 'Bearer '+ token} }				// auth
+					)
+				   .then(
+				       function(response){
+				         // success callback
+						if (response.data)
+							self.msg = "Put Data Method Executed Successfully!";
+				       }, 
+				       function(response){
+				         // failure callback
+				         	self.msg = "error";
+				       }
+				    );
+			}
+
+
 		};
 	}]);

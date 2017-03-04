@@ -5,7 +5,8 @@
 - [x] post an item 
 - [x] modify state of an item
 - [ ] modify an item
-- [ ] users and auth
+- [x] users, posting by different authors
+- [x] auth, login/out, register
 
 ANGULAR
 $http.put format, data must be JSON object like {login: "login", password: "password"}
@@ -46,8 +47,10 @@ fix was to let Express serve 'views' folder and $routeProvider finally ended up 
 still not 100% confident about the fix though but at least basic security concerns
 are hanled by the otherwise route in Angular
 
-
-
-
 http://stackoverflow.com/questions/25663598/how-to-redirect-to-another-page-in-routeprovider-in-resolve-condition
 http://stackoverflow.com/questions/18256106/cancel-route-and-redirect-to-other-route-without-displaying-the-original-content
+
+
+Added auth factory and NavCtrl and AuthCtrl
+auth token attached to HTTP headers - for now only Adding Post
+
