@@ -113,6 +113,10 @@ angular.module('todoApp', ['ngRoute'])
 		  });
 		};
 
+		auth.logOut = function() {
+			$window.localStorage.removeItem('todo-token');
+		};
+
 		return auth;
 	}])
 
