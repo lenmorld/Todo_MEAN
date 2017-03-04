@@ -6,16 +6,19 @@
 						<div ng-repeat="item in mainCtrl.items">
 							<div class="checkbox">
 								<label><input type="checkbox" 
-											  ng-model="item.done"/>
+											  ng-model="item.done"
+											  ng-change="mainCtrl.todoChange(item)" />
 								
-									<span ng-class="{ 'text-success' : item.done, 'text-danger' : !item.done }">{{item.title}}</span>
+									<span ng-class="{ 'text-success' : item.done, 'text-danger' : !item.done }">{{item.title}}
+									</span>
+									<!-- author -->
+									<small ng-show="item.author">
+							  			posted by <a>{{item.author}}</a>
+									</small>  
 								</label>
 							</div>
 
-							<!-- author -->
-							<span ng-show="post.author">
-					  			posted by <a>{{post.author}}</a> |
-							</span>  
+
 						</div>
 
 						<div class="row"
