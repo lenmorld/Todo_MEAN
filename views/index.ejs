@@ -7,11 +7,20 @@
 	</style>
 
 	<script src="/javascripts/angular.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.js"></script>
+	<script src="/javascripts/angular-route.js"></script>
 	<script src="/javascripts/angularApp.js"></script>
 </head>
 
 <body ng-app="todoApp">
+
+	  <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
+	    <ul class="nav navbar-nav">
+	      <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+	      <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+	      <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+	      <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+	    </ul>
+	  </nav>
 
 	<!-- <div ng-controller="MainCtrl as mainCtrl"> -->
 		<div class="container">

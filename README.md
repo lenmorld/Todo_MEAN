@@ -45,3 +45,9 @@ and/or ngRoute and Express was stepping on each other's foot in taking the URL
 fix was to let Express serve 'views' folder and $routeProvider finally ended up seeing it 
 still not 100% confident about the fix though but at least basic security concerns
 are hanled by the otherwise route in Angular
+
+
+
+
+http://stackoverflow.com/questions/25663598/how-to-redirect-to-another-page-in-routeprovider-in-resolve-condition
+http://stackoverflow.com/questions/18256106/cancel-route-and-redirect-to-other-route-without-displaying-the-original-content

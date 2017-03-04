@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
+var jwt = require('express-jwt');
 
 // mongoose and DB models
 var mongoose = require('mongoose');
 var Todo = mongoose.model('Todo');
+var User = mongoose.model('User');
 
-
-/* GET home page. */
+// middleware for authenticating jwt tokens
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});		// we use payload to avoid conflicts with passport
+																	// hardcoded SECRET at models/User.js
+/* GET home page. */	
 router.get('/', function(req, res, next) {
 	console.log("NODE get /");
   res.render('index', { title: 'NodeJS Express message' });
@@ -24,9 +29,13 @@ router.get('/todos', function(req, res, next) {
 });
 
 
-router.post('/todos', function(req, res, next) {
+// AUTH for creating todo
+router.post('/todos', auth, function(req, res, next) {
 	// console.log("post", req.body);
 	var todo = new Todo(req.body); 		// create mongoose Todo object 
+
+	// set author when creating Todo
+	todo.author = req.payload.username;
 
 	console.log(todo);
 	todo.save(function(err, todo) {
@@ -71,5 +80,36 @@ router.put('/todos/:id', function(req, res, next) {
 
 });
 
+router.post('/register', function(req, res, next) {
+	if(!req.body.username || !req.body.password) {
+		return res.status(400).json({message: 'Please fill out all fields'});
+	}
+
+	var user = new User();
+	user.username = req.body.username;
+	user.setPassword (req.body.password);
+	user.save(function(err) {
+		if(err){ return next(err); }
+
+		return res.json({token: user.generateJWT()})
+	});
+});
+
+router.post('/login', function(req, res, next) {
+	if(!req.body.username || !req.body.password) {
+		return res.status(400).json({message: 'Please fill out all fields'});
+	}
+
+  passport.authenticate('local', function(err, user, info){			// uses LocalStrategy
+    if(err){ return next(err); }									
+
+    if(user){
+      return res.json({token: user.generateJWT()});			// successful		
+    } else {
+      return res.status(401).json(info);					// 401 unauthorized
+    }
+  })(req, res, next);
+
+});
 
 module.exports = router;
