@@ -51,6 +51,7 @@ http://stackoverflow.com/questions/25663598/how-to-redirect-to-another-page-in-r
 http://stackoverflow.com/questions/18256106/cancel-route-and-redirect-to-other-route-without-displaying-the-original-content
 
 
-Added auth factory and NavCtrl and AuthCtrl
+- Added auth factory and NavCtrl and AuthCtrl
 auth token attached to HTTP headers - for now only Adding Post
 
+- added alert for changing status(check) only when not logged in
