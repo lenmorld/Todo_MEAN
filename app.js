@@ -10,7 +10,10 @@ var mongoose = require('mongoose');
 // passport
 var passport = require('passport');
 
-mongoose.connect('mongodb://localhost/todo');
+//mongoose.connect('mongodb://localhost/todo');
+
+// Elastic IP
+mongoose.connect('mongodb://lenny_todo:2049@52.44.44.181:27017/todo'); 
 
 // crypto
 // var crypto = require('crypto');
