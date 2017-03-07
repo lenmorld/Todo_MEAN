@@ -1,6 +1,6 @@
 # TODO APP using MEAN
 
-## now LIVE at http://52.44.44.181:3000/#/todos
+## now LIVE at http://52.44.44.181:3000/
 ## thanks to AWS credits for the hosting =)
 
 - [x] MEAN stack working

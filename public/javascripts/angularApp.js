@@ -3,10 +3,18 @@ angular.module('todoApp', ['ngRoute'])
 
 		$locationProvider.hashPrefix('');
 
-		$routeProvider.when('/', {
+		$routeProvider
+
+		// .when('/', {
+		// 	// templateUrl: '/views/home.ejs'
+		// 	templateUrl: 'home.ejs',
+		// 	controller: 'IndexCtrl'
+		// })
+		.when('/', {
 			// templateUrl: '/views/home.ejs'
-			templateUrl: 'home.ejs',
-			controller: 'IndexCtrl'
+			templateUrl: 'todos.ejs',
+			controller: 'MainCtrl',
+			controllerAs: 'mainCtrl'
 		})
 		.when('/todos', {
 			// templateUrl: '/views/todos.ejs'
@@ -14,10 +22,10 @@ angular.module('todoApp', ['ngRoute'])
 			controller: 'MainCtrl',
 			controllerAs: 'mainCtrl'
 		})
-		.when('/second', {
+		.when('/about', {
 			// templateUrl: '/views/second.ejs'
-			templateUrl: 'second.ejs',
-			controller: 'SecondCtrl'
+			templateUrl: 'about.ejs',
+			controller: 'AboutCtrl'
 
 		})
 		.when('/login', {
@@ -105,6 +113,17 @@ angular.module('todoApp', ['ngRoute'])
 		  }
 		};
 
+
+		auth.currentUser = function() {
+			if (auth.isLoggedIn()) {
+				var token = auth.getToken();
+				var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+				return payload.username;
+			}
+		};
+
+
 		// use /register and /login routes created before
 
 		auth.register = function(user){
@@ -173,7 +192,7 @@ angular.module('todoApp', ['ngRoute'])
 		console.log("ngRoute: Index");
 	})
 
-	.controller('SecondCtrl', function() {
+	.controller('AboutCtrl', function() {
 		console.log("ngRoute: Second");
 	})	
 
